@@ -6,15 +6,21 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-slate-700 h-screen flex justify-center items-center">
-<div class="text-white font-semibold text-4xl">
+<body class="bg-slate-800">
+<div class="flex justify-center items-end text-white font-semibold text-5xl mb-4 [height:30vh]">
     <span id="hours" >00</span>
     <span id="minutes" >00</span>
-    <span id="seconds" >00</span>
+    <span id="seconds"  class="mr-2">00</span>
 </div>
-
-
-
+<div class="flex items-center  justify-center">
+    <!-- Input fields for setting the alarm time -->
+    <input type="number" id="alarm-hours" min="0" max="12" placeholder="Hours" class="">
+    <input type="number" id="alarm-minutes" min="0" max="59" placeholder="Minutes" class="mr-2">
+    <!-- Button to set the alarm -->
+    <div class="bg-red-50  hover:bg-red-300 border rounded-sm">
+        <button type="submit">Set Alarm</button>
+    </div>
+</div>
     <script src="app.js"></script>
 </body>
 </html>
