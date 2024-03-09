@@ -17,9 +17,12 @@
     <input type="number" id="alarm-hours" min="0" max="12" placeholder="Hours" class="">
     <input type="number" id="alarm-minutes" min="0" max="59" placeholder="Minutes" class="mr-2">
     <!-- Button to set the alarm -->
-    <div class="bg-red-50  hover:bg-red-300 border rounded-sm">
-        <button type="submit">Set Alarm</button>
+    <div class="bg-red-50  hover:bg-slate-400 border rounded-md">
+        <button onclick=createAlarmList()>Set Alarm</button>
     </div>
+</div>
+<div id="alarmlist" class="text-white text-xl mx-[50px] mt-[20px]">
+    
 </div>
     <script src="app.js"></script>
 </body>
