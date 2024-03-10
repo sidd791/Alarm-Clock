@@ -8,14 +8,18 @@ function currentTime() {
     document.getElementById('hours').textContent = hours.toString().padStart(2, '0') + " :";
     document.getElementById('minutes').textContent = minutes + " :";
     document.getElementById('seconds').textContent = seconds + " " + ampm;
+    checkAlarms();
 }
 
 setInterval(currentTime, 1000);
 currentTime();
 
+
 function createAlarmList() {
     const hrs = document.getElementById('alarm-hours').value;
     const mins = document.getElementById('alarm-minutes').value;   
+    document.getElementById('alarm-hours').value = ''
+    document.getElementById('alarm-minutes').value = ''
     const alarmlist = document.createElement('div');
     const deleteButton = document.createElement('button');
     deleteButton.classList = "border rounded-md mx-8 my-2 text-base hover:bg-slate-400";
@@ -32,16 +36,23 @@ function createAlarmList() {
 
     if (hrs !== '' && mins !== '') {
         document.getElementById('alarmlist').appendChild(alarmlist);
+    
+    }
+}
+function checkAlarms() {
+    const alarmElements = document.querySelectorAll('#alarmlist div'); // Select all alarm divs
+    
+    // Loop through each alarm element and check for matches
+    for (const alarmElement of alarmElements) {
+        const [alarmHours, alarmMinutes] = alarmElement.textContent.match(/\d{2}/g).map(Number);
+        const now = new Date();
+        const currentHours = now.getHours() % 12 || 12; // Adjust for 12-hour format
+        const currentMinutes = now.getMinutes();
 
-        // Check time periodically
-        setInterval(function() {
-            const currentTime = new Date();
-            const currentHours = currentTime.getHours().toString().padStart(2, '0');
-            const currentMinutes = currentTime.getMinutes().toString().padStart(2, '0');
-            
-            if (currentHours === hrs && currentMinutes === mins) {
-                alert(`Alarm at ${hrs.padStart(2,'0')}:${mins.padStart(2,'0')}!`);
-            }
-        }, 1000); // Check every second (adjust as needed)
+        if (alarmHours === currentHours && alarmMinutes === currentMinutes) {
+            let audio = new Audio("aud.mp3")
+            audio.play();
+            return; 
+        }
     }
 }
