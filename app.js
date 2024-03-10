@@ -1,3 +1,4 @@
+var audio = new Audio("aud.mp3")
 function currentTime() {
     const now = new Date();
     let hours = now.getHours() % 12 || 12;
@@ -29,6 +30,7 @@ function createAlarmList() {
 
     deleteButton.textContent = "Delete";
     deleteButton.onclick = function() {
+        audio.pause()
         alarmlist.remove();
     };
 
@@ -50,9 +52,9 @@ function checkAlarms() {
         const currentMinutes = now.getMinutes();
 
         if (alarmHours === currentHours && alarmMinutes === currentMinutes) {
-            let audio = new Audio("aud.mp3")
             audio.play();
             return; 
         }
     }
 }
+
