@@ -24,8 +24,8 @@ function createAlarmList() {
     const alarmlist = document.createElement('div');
     const deleteButton = document.createElement('button');
     deleteButton.classList = "border rounded-md mx-8 my-2 text-base hover:bg-slate-400";
-    
-    alarmlist.textContent = `Alarm set at ${hrs.padStart(2, '0')}:${mins.padStart(2, '0')}`;
+    const ampm = document.getElementById('am-pm').value;
+    alarmlist.textContent = `Alarm set at ${hrs.padStart(2, '0')}:${mins.padStart(2, '0')} ${ampm}`;
     alarmlist.classList = "mx-2 my-2";
 
     deleteButton.textContent = "Delete";
@@ -42,19 +42,23 @@ function createAlarmList() {
     }
 }
 function checkAlarms() {
-    const alarmElements = document.querySelectorAll('#alarmlist div'); // Select all alarm divs
-    
-    // Loop through each alarm element and check for matches
-    for (const alarmElement of alarmElements) {
-        const [alarmHours, alarmMinutes] = alarmElement.textContent.match(/\d{2}/g).map(Number);
-        const now = new Date();
-        const currentHours = now.getHours() % 12 || 12; // Adjust for 12-hour format
-        const currentMinutes = now.getMinutes();
+    const alarmElements = document.querySelectorAll('#alarmlist div');
 
-        if (alarmHours === currentHours && alarmMinutes === currentMinutes) {
-            audio.play();
-            return; 
+    for (const alarmElement of alarmElements) {
+        const match = alarmElement.textContent.match(/(\d{2}):(\d{2})\s([APMapm]{2})/);
+
+        if (match) {
+            const [, hours, minutes, ampm] = match;
+            const now = new Date();
+            const currentHours = now.getHours() % 12 || 12;
+            const currentMinutes = now.getMinutes();
+            const currentAmpm = now.getHours() >= 12 ? "PM" : "AM";
+
+            // Check if alarm matches current time and AM/PM
+            if (parseInt(hours) === currentHours && parseInt(minutes) === currentMinutes && ampm.toUpperCase() === currentAmpm) {
+                audio.play();
+                return; 
+            }
         }
     }
 }
-
